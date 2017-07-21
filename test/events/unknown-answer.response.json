@@ -1,0 +1,21 @@
+{
+  "version": "1.0",
+  "response": {
+    "shouldEndSession": false,
+    "outputSpeech": {
+      "type": "SSML",
+      "ssml": "<speak> Ich habe dich nicht ganz verstanden. Bitte antworte mit: \"Das ist wahr\" oder mit: \"Das ist falsch\". </speak>"
+    }
+  },
+  "sessionAttributes": {
+    "answers": {
+      "a73": 0
+    },
+    "STATE": "_GUESSMODE",
+    "currentQuestion": {
+      "question": "Wenn man von Westen nach Osten fliegt ist der Jetlag schlimmer als umgekehrt.",
+      "truth": true,
+      "id": 73
+    }
+  }
+}

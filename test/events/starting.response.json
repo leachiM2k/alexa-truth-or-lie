@@ -1,0 +1,15 @@
+{
+  "version": "1.0",
+  "response": {
+    "shouldEndSession": false,
+    "outputSpeech": {
+      "type": "SSML",
+      "ssml": "<speak> Super! Dann fangen wir an. Ich erzähle dir 5 Behauptungen und du musst sagen, ob sie wahr oder falsch sind. Bist du bereit? </speak>"
+    }
+  },
+  "sessionAttributes": {
+    "STATE": "_GUESSMODE",
+    "currentQuestion": {},
+    "answers": {}
+  }
+}

@@ -79,54 +79,42 @@ var guessGameHandler = Alexa.CreateStateHandler(STATES.GUESSMODE, {
     },
 
     'AMAZON.YesIntent': function () {
-        if (this.attributes.currentQuestion.id && this.attributes.answers['a' + this.attributes.currentQuestion.id] === ANSWER.UNANSWERED) {
-            this.emit(':ask', messages.get('GUESSMODE_ANSWER_UNKNOWN'));
-            return;
+        if (isCurrentAnswerUnanswered(this.attributes)) {
+            return this.emit(':ask', messages.get('GUESSMODE_ANSWER_UNKNOWN'));
         }
 
-        let questionId = getNewQuestion(Object.keys(this.attributes.answers).map(answer => Number(answer.replace(/\D/g, ''))));
+        let questionId = getNewQuestionId(Object.keys(this.attributes.answers).map(answer => Number(answer.replace(/\D/g, ''))));
+        this.attributes.currentQuestion = getQuestionById(questionId);
 
-        questions[questionId].question = questions[questionId].question.trim().replace(/\.?$/, '.');
+        this.attributes.answers['a' + this.attributes.currentQuestion.id] = ANSWER.UNANSWERED;
 
-        this.attributes.answers['a' + questionId] = ANSWER.UNANSWERED;
-        this.attributes.currentQuestion = questions[questionId];
-        this.attributes.currentQuestion.id = questionId;
-
-        this.emit(':ask', messages.get('GUESSMODE_STATEMENT', {
-            count: Object.keys(this.attributes.answers).length,
-            statement: this.attributes.currentQuestion.question
-        }));
+        this.emit(':ask', getCurrentQuestionMessage(this.attributes));
     },
 
     'AMAZON.NoIntent': function () {
-        if (this.attributes.currentQuestion.id && this.attributes.answers['a' + this.attributes.currentQuestion.id] === ANSWER.UNANSWERED) {
-            this.emit(':ask', messages.get('GUESSMODE_ANSWER_UNKNOWN'));
-            return;
+        if (isCurrentAnswerUnanswered(this.attributes)) {
+            return this.emit(':ask', messages.get('GUESSMODE_ANSWER_UNKNOWN'));
         }
 
         this.emit(':tell', messages.get('CYA_SOON'));
     },
 
     'TruthOrLieAnswerIntent': function () {
-        let truthOrLieSlot = this.event.request.intent.slots.TruthOrLie.value;
-        let truthOrLie = null;
-        if (truthOrLieSlot && truthOrLieSlot.match(/wahr|richtig|stimmt(?! nicht)/)) {
-            truthOrLie = true;
-        } else if (truthOrLieSlot && truthOrLieSlot.match(/falsch|lüge|stimmt nicht/)) {
-            truthOrLie = false;
-        } else {
+        let truthOrLieSlot = this.event.request.intent.slots && this.event.request.intent.slots.TruthOrLie && this.event.request.intent.slots.TruthOrLie.value;
+        let guessedTruth = guessedTruthOrLieAnswer(truthOrLieSlot);
+        if (guessedTruth === null) {
             this.emit(':ask', messages.get('DONT_UNDERSTAND') + messages.get('GUESSMODE_ANSWER_UNKNOWN'));
             return;
         }
 
-        if (this.attributes.answers['a' + this.attributes.currentQuestion.id] !== ANSWER.UNANSWERED) {
+        if (!isCurrentAnswerUnanswered(this.attributes)) {
             this.emit(':ask', messages.get('GUESSMODE_ALREADY_ANSWERED'));
             return;
         }
 
         let msgs = [];
 
-        if (this.attributes.currentQuestion.truth === truthOrLie) {
+        if (this.attributes.currentQuestion.truth === guessedTruth) {
             this.attributes.answers['a' + this.attributes.currentQuestion.id] = ANSWER.RIGHT;
             msgs.push('GUESSMODE_ANSWER_RIGHT');
         } else {
@@ -167,7 +155,27 @@ var guessGameHandler = Alexa.CreateStateHandler(STATES.GUESSMODE, {
 
 });
 
-function getNewQuestion(playedQuestions) {
+function isCurrentAnswerUnanswered(attributes) {
+    return attributes.currentQuestion.id && attributes.answers['a' + attributes.currentQuestion.id] === ANSWER.UNANSWERED;
+}
+
+function guessedTruthOrLieAnswer(truthOrLieSlot) {
+    let truthOrLie = null;
+    if (!truthOrLieSlot) {
+        return truthOrLie;
+    }
+    if (truthOrLieSlot.match(/wahr|richtig|stimmt(?! nicht)/)) {
+        truthOrLie = true;
+    } else if (truthOrLieSlot.match(/falsch|lüge|stimmt nicht/)) {
+        truthOrLie = false;
+    }
+    return truthOrLie;
+}
+
+function getNewQuestionId(playedQuestions) {
+    if (global && global.TEST_MODE) {
+        return 1;
+    }
     let questionId;
     do {
         questionId = Math.floor(Math.random() * questions.length);
@@ -175,3 +183,16 @@ function getNewQuestion(playedQuestions) {
     return questionId;
 }
 
+function getQuestionById(id) {
+    let statement = questions[id];
+    statement.id = id;
+    statement.question = statement.question.trim().replace(/\.?$/, '.');
+    return statement;
+}
+
+function getCurrentQuestionMessage(attributes) {
+    return messages.get('GUESSMODE_STATEMENT', {
+        count: Object.keys(attributes.answers).length,
+        statement: attributes.currentQuestion.question
+    });
+}

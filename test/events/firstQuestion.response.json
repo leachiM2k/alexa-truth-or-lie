@@ -1,0 +1,22 @@
+{
+  "version": "1.0",
+  "response": {
+    "shouldEndSession": false,
+    "outputSpeech": {
+      "type": "SSML",
+      "ssml": "<speak> Die 1. Behauptung lautet: Grünkern ist eine besonders wertvolle Getreideart. Ist das ... <emphasis level=\"strong\">wahr</emphasis> ... oder ... <emphasis level=\"strong\">falsch</emphasis>? </speak>"
+    }
+  },
+  "sessionAttributes": {
+    "answers": {
+      "a1": 0
+    },
+    "STATE": "_GUESSMODE",
+    "currentQuestion": {
+      "question": "Grünkern ist eine besonders wertvolle Getreideart.",
+      "explanation": "Grünkern ist keine eigene Getreideart. In milchreifem Zustand geerntete, dann langsam gedörrte und entspelzte Dinkelkörner gelangen als Grünkern in den Handel.",
+      "truth": false,
+      "id": 1
+    }
+  }
+}

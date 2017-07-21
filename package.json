@@ -9,6 +9,8 @@
     "alexa-sdk": "^1.0.9"
   },
   "devDependencies": {
+    "alexa-skill-tester": "^1.1.2",
+    "mocha": "^3.4.2",
     "node-lambda": "^0.11.3"
   }
 }

@@ -1,0 +1,32 @@
+{
+  "session": {
+    "sessionId": "SessionId.106f8b7b-6e9c-41e2-bec7-af8f790c38ae",
+    "application": {
+      "applicationId": "amzn1.ask.skill.37f82415-4d1a-4d39-a36e-c31e787f0a56"
+    },
+    "attributes": {
+      "answers": {},
+      "STATE": "_GUESSMODE",
+      "currentQuestion": {
+        "question": "Wenn man von Westen nach Osten fliegt ist der Jetlag schlimmer als umgekehrt.",
+        "truth": true,
+        "id": 73
+      }
+    },
+    "user": {
+      "userId": "amzn1.ask.account.AEUCWJGVMU7S2YMNTSOOD7YHOJBD2MOYHZFPY6VSO3FACWJ27CIJK3R5ITAHJOMTHEU772ZBNNQU4YRUG5YUSSIWR3SVP2VQGXKR7DAOLZGTT6SMRE5TCYYTTFA67IXYDRRFH4IQIKES2M2B2NNE3CXR5KUNMWL5NSCKHUEUYDUAGWNDYCEHZC5KVTK2UZ74UJXWDUYV3LO57FY"
+    },
+    "new": false
+  },
+  "request": {
+    "type": "IntentRequest",
+    "requestId": "EdwRequestId.69386d57-48ec-4c0d-a052-9f3f8341ee67",
+    "locale": "de-DE",
+    "timestamp": "2017-07-21T13:10:18Z",
+    "intent": {
+      "name": "AMAZON.YesIntent",
+      "slots": {}
+    }
+  },
+  "version": "1.0"
+}

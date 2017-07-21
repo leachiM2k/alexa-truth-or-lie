@@ -1,0 +1,19 @@
+{
+  "version": "1.0",
+  "response": {
+    "shouldEndSession": false,
+    "outputSpeech": {
+      "type": "SSML",
+      "ssml": "<speak> Willkommen bei stimmt's oder stimmt's nicht. Es läuft noch kein Spiel. Wollen wir eins beginnen? </speak>"
+    },
+    "reprompt": {
+      "outputSpeech": {
+        "type": "SSML",
+        "ssml": "<speak> Bitte \"ja\" zum starten und \"nein\" zum Beenden sagen. </speak>"
+      }
+    }
+  },
+  "sessionAttributes": {
+    "STATE": "_STARTING"
+  }
+}
