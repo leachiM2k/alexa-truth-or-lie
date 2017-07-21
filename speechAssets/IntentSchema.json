@@ -1,0 +1,77 @@
+{
+  "intents": [
+    {
+      "name": "AMAZON.CancelIntent",
+      "samples": []
+    },
+    {
+      "name": "AMAZON.HelpIntent",
+      "samples": []
+    },
+    {
+      "name": "AMAZON.NoIntent",
+      "samples": []
+    },
+    {
+      "name": "AMAZON.StopIntent",
+      "samples": []
+    },
+    {
+      "name": "AMAZON.YesIntent",
+      "samples": []
+    },
+    {
+      "name": "BeginTruthOrLie",
+      "samples": [
+        "ein neues Spiel",
+        "eine neue Runde",
+        "starte neue Runde",
+        "beginne neue Runde",
+        "starte Spiel"
+      ],
+      "slots": []
+    },
+    {
+      "name": "TruthOrLieAnswerIntent",
+      "samples": [
+        "Das {TruthOrLie} ",
+        "Das ist {TruthOrLie} "
+      ],
+      "slots": [
+        {
+          "name": "TruthOrLie",
+          "type": "LIST_OF_ANSWERS",
+          "samples": []
+        }
+      ]
+    }
+  ],
+  "types": [
+    {
+      "name": "LIST_OF_ANSWERS",
+      "values": [
+        {
+          "id": "1",
+          "name": {
+            "value": "richtig",
+            "synonyms": [
+              "wahr",
+              "wahrheit",
+              "stimmt"
+            ]
+          }
+        },
+        {
+          "id": "0",
+          "name": {
+            "value": "falsch",
+            "synonyms": [
+              "lüge",
+              "stimmt nicht"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
